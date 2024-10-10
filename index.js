@@ -10,18 +10,19 @@ bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
 
 // Handle other messages.
 bot.on("message", (ctx) => {
-    const arr = ctx.message.text.split(' ')
-    const result = arr.reduce((acc, operand, idx)=>{
-        if (idx === 0 && idx % 2 > 0) return acc
-        if (operand === '+') return acc + Number(arr[idx + 1])
-        if (operand === '-') return acc - Number(arr[idx + 1])
-        if (operand === '*') return acc * Number(arr[idx + 1])
-        if (operand === '/') return acc / Number(arr[idx + 1])
-        return acc
-    }, Number(arr[0]))
-
-    ctx.reply(`${result}`)
-    // ctx.reply("Got another message!")
+    if (ctx.message.from.id !== 934288492) {
+        ctx.reply(`Доступ запрещен`)
+        return;
+    }
+    // if (ctx.chat.id !== 934288492) ctx.reply(`Доступ запрещен`)
+    const allowed = ['+', '-', '*', '/', '(', ')', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    const msg = ctx.message.text.split('').filter((el) => allowed.includes(el)).join('')
+    try {
+        const result = eval(msg)
+        ctx.reply(`${result}`)
+    } catch {
+        ctx.reply(`Неправильное выражение`)
+    }
 });
 
 // Now that you specified how to handle messages, you can start your bot.
@@ -29,3 +30,4 @@ bot.on("message", (ctx) => {
 
 // Start the bot.
 bot.start();
+
