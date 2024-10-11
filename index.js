@@ -17,11 +17,6 @@ const init = async () => {
 
     // Handle other messages.
     bot.hears(/=$/, async (ctx) => {
-        if (ctx.message.from.id !== 934288492) {
-            await ctx.reply(`Доступ запрещен`)
-            return;
-        }
-        // if (ctx.chat.id !== 934288492) ctx.reply(`Доступ запрещен`)
         const allowed = ['+', '-', '*', '/', '(', ')', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
         const msg = ctx.message.text?.split('').filter((el) => allowed.includes(el)).join('')
         try {
