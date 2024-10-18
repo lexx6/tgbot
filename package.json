@@ -11,6 +11,10 @@
   "author": "Lexx",
   "license": "ISC",
   "dependencies": {
-    "grammy": "^1.30.0"
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "fs": "^0.0.1-security",
+    "grammy": "^1.30.0",
+    "https": "^1.0.0"
   }
 }

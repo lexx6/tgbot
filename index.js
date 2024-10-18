@@ -1,6 +1,14 @@
-import { Bot, InputFile } from "grammy";
+import dotenv from "dotenv";
+import { Bot } from "grammy";
+import Calc from "./scripts/calc.js"
+import YesNo from "./scripts/yes-no.js";
+import ImgSaver from "./scripts/imgSaver.js"
+import Hello from "./scripts/hello.js";
+import RandomNum from "./scripts/randomNum.js";
+import { WheatherTommorow, WheatherToday } from "./scripts/weather.js";
 
-const bot = new Bot("7188438211:AAHPx0EHqN_UOHWZor8KG2N2Geb3fV979_I");
+dotenv.config() //инициализируем переменные окружения
+const bot = new Bot(process.env.TGTOKEN);
 
 const init = async () => {
 
@@ -11,30 +19,14 @@ const init = async () => {
         { command: "start", description: "Запускает бот" },
     ]);
 
-    // Handle the /start command.
-    bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));
-
-
-    // Handle other messages.
-    bot.hears(/=$/, async (ctx) => {
-        const allowed = ['+', '-', '*', '/', '(', ')', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-        const msg = ctx.message.text?.split('').filter((el) => allowed.includes(el)).join('')
-        try {
-            const result = eval(msg)
-            await ctx.reply(`${result}`)
-        } catch {
-            await ctx.reply(`Неправильное выражение`)
-        }
-    });
-
-    bot.hears(/\?$/, async (ctx) => {
-        const randomNum = Math.round(Math.random())
-        if (!!randomNum) {
-            await ctx.replyWithPhoto(new InputFile("./Yes.png"));
-        } else {
-            await ctx.replyWithPhoto(new InputFile("./No.png"));
-        }
-    })
+    bot.command("start", (ctx) => ctx.reply("Welcome! Up and running."));     // Handle the /start command.
+    bot.hears(/=$/, Calc); //считает математику
+    bot.hears(/\?$/, YesNo) //генератор картинки да или нет
+    bot.hears(/^сохрани$/i, ImgSaver) //Сохраняет файл
+    bot.hears(/^Привет$/i, Hello) //Здоровается
+    bot.hears(/^сгенерируй/i, RandomNum) //генерирует случайное число
+    bot.hears(/^погода завтра$/, WheatherTommorow) //прогноз погоды на завтра
+    bot.hears(/^погода сегодня$/, WheatherToday) //прогноз погоды на сегодня
 
     // Now that you specified how to handle messages, you can start your bot.
     // This will connect to the Telegram servers and wait for messages.
