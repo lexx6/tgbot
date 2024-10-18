@@ -1,4 +1,5 @@
-import dotenv from "dotenv";
+import "dotenv/config";
+import fs from "fs";
 import { Bot } from "grammy";
 import Calc from "./scripts/calc.js"
 import YesNo from "./scripts/yes-no.js";
@@ -7,8 +8,10 @@ import Hello from "./scripts/hello.js";
 import RandomNum from "./scripts/randomNum.js";
 import { WheatherTommorow, WheatherToday } from "./scripts/weather.js";
 
-dotenv.config() //инициализируем переменные окружения
 const bot = new Bot(process.env.TGTOKEN);
+
+
+fs.mkdirSync('./temp', { recursive: true })
 
 const init = async () => {
 

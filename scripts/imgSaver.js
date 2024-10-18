@@ -2,13 +2,14 @@ import axios from "axios";
 import fs from "fs";
 
 export default async (ctx) => {
+
     try {
         const fileName = ctx.update.message.photo[2].file_unique_id
         const file = await ctx.api.getFile(ctx.update.message.photo[2].file_id)
         const filePath = file.file_path
-        const url = `https://api.telegram.org/file/bot7188438211:AAHPx0EHqN_UOHWZor8KG2N2Geb3fV979_I/${filePath}`
+        const url = `https://api.telegram.org/file/bot${process.env.TGTOKEN}/${filePath}`
         
-        const saveTo = `C:\\Users\\lexx6\\BotFiles\\${fileName}.jpg`
+        const saveTo = `./temp/${fileName}.jpg`
         const fileStream = fs.createWriteStream(saveTo);
 
         fileStream.on('finish', async () => {
@@ -23,3 +24,12 @@ export default async (ctx) => {
         await ctx.reply('Ошибка при сохранении фотографии')
     }
 }
+
+// создать папку temp при запуске. (если папка существует ингорируем этот шаг) !!!!
+
+// сохранить файл с помощью потока (stream) в папку temp
+// передать на yandex диск (с учетом отправителя фотки, если нужно - создать папку с именем отправителя на y.disk)
+// удалить файл из папки temp
+// сказать пользователю, что все ок
+
+// билбиотека для yandex диска https://github.com/Kolyaj/yandex-disk

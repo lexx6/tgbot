@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const WheatherTommorow = async (ctx) => {
     try {
-        const resp = await axios.get('https://api.weatherapi.com/v1/forecast.json?key=99f67e7810d6474b86095041241110&q=Moscow&days=2&aqi=no&alerts=no')
+        const resp = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${process.env.WEATHERTOKEN}&q=Moscow&days=2&aqi=no&alerts=no`)
         const {
             mintemp_c: minTemp,
             maxtemp_c: maxTemp,
@@ -38,7 +38,7 @@ export const WheatherTommorow = async (ctx) => {
 
 export const WheatherToday = async (ctx) => {
     try {
-        const resp = await axios.get('http://api.weatherapi.com/v1/current.json?key=99f67e7810d6474b86095041241110&q=Moscow&aqi=no')
+        const resp = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.WEATHERTOKEN}&q=Moscow&aqi=no`)
         const {
             temp_c: temp,
             humidity, 
