@@ -15,6 +15,7 @@
     "dotenv": "^16.4.5",
     "fs": "^0.0.1-security",
     "grammy": "^1.30.0",
-    "https": "^1.0.0"
+    "ya-disk-stream": "^2.0.0",
+    "yandex-disk": "^0.0.8"
   }
 }
